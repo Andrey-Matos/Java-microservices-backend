@@ -11,40 +11,37 @@ import br.com.compassuol.sp.challenge.msproducts.repositories.ProductRepository;
 
 @Service
 public class ProductService {
-	
-	@Autowired
-	private ProductRepository repository;
-	
-	// GET ALL
-	public List<ProductEntity> getAllProducts(){
-        List<ProductEntity> products = repository.findAll();
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    // GET ALL
+    public List<ProductEntity> getAllProducts() {
+        List<ProductEntity> products = productRepository.findAll();
         return products;
     }
-	
-	// GET BY ID
-	public ProductEntity getProductById(Long id) {
-        Optional<ProductEntity> product = repository.findById(id);
-        return product.get();
+
+    // GET BY ID
+    public ProductEntity getProductById(Long id) {
+        return productRepository.findById(id).orElse(null);
     }
-	
-	// POST
-    public String saveProduct(ProductEntity product) {
-        ProductEntity newProduct = repository.save(product);
-        return "Produto criado com sucesso!";
+
+    // POST
+    public ProductEntity saveProduct(ProductEntity product) {
+        return productRepository.save(product);
     }
-    
+
     // PUT
-    public String updateProduct(ProductEntity product, Long id) {
-        product.setId(id);
-        ProductEntity newProduct = repository.save(product);
-        return "Produto atualizado com sucesso!";
+    public ProductEntity updateProduct(Long id, String status) {
+        ProductEntity temp = getProductById(id);
+        temp.setStatus(status);
+        return productRepository.save(temp);
+
     }
-    
+
     // DELETE
-    public String deleteProduct(Long id) {
-        Optional<ProductEntity> product = repository.findById(id);
-        repository.delete(product.get());
-        return "Produto de id "+id+" removido com sucesso!";
+    public void deleteProduct(Long id) {
+        Optional<ProductEntity> product = productRepository.findById(id);
+        productRepository.delete(product.get());
     }
-	
 }

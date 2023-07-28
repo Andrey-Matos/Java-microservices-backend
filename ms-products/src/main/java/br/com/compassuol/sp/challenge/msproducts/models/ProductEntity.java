@@ -15,22 +15,26 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "products")
 public class ProductEntity {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column( nullable = false)
-	private String name;
+    @Column(nullable = false)
+    private String name;
 
-	@Column( nullable = false)
-	private String description;
+    @Column(nullable = false)
+    private String description;
 
-	@Column(nullable = false)
-	private BigDecimal price;
+    @Column(nullable = false)
+    private BigDecimal price;
 
-	public ProductEntity(String name, String description, BigDecimal price) {
-		this.name = name;
-		this.description = description;
-		this.price = price;
-	}
+    @Column(nullable = false)
+    private String status;
+
+    public ProductEntity(String name, String description, BigDecimal price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.status = "PENDENTE";
+    }
 }
