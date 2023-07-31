@@ -1,0 +1,29 @@
+
+server:  
+      port: 0
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    publisher-confirm-type: correlated
+    publisher-returns: true
+
+  application:
+    name:
+      ms-products
+
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/challenge_III
+    username: postgres
+    password: admin
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.jdbc.lob.non_contextual_creation: true

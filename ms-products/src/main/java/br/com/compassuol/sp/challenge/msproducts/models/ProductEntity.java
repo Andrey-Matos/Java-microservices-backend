@@ -1,34 +1,40 @@
-package br.com.compassuol.sp.challenge.msproducts.model;
+package br.com.compassuol.sp.challenge.msproducts.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Entity
 @Setter
 @Getter
 @NoArgsConstructor
-@Table(name = "tb_products")
+@AllArgsConstructor
+@Entity
+@Table(name = "products")
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
     private BigDecimal price;
 
+    @Column(nullable = false)
+    private String status;
+
     public ProductEntity(String name, String description, BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.status = "PENDENTE";
     }
 }
