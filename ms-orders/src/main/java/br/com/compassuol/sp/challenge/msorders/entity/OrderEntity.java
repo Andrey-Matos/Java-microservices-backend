@@ -32,17 +32,14 @@ public class OrderEntity {
 
 	@ElementCollection
 	@Column(nullable = false)
-	private ArrayList<Object> products;
+	private ArrayList<Long> products;
 
 	@Column(nullable = false)
 	private String enderecoEntrega;
 
-	public OrderEntity(Long userId, ArrayList<Object> products, String enderecoEntrega) {
+	public OrderEntity(Long userId, ArrayList<Long> products, String enderecoEntrega) {
 		this.userId = userId;
 		this.products = products;
 		this.enderecoEntrega = enderecoEntrega;
-	}
-	public void addProduct(Object product) {
-		this.products.add(product);
 	}
 }
