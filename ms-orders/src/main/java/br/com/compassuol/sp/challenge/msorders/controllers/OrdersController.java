@@ -1,5 +1,6 @@
 package br.com.compassuol.sp.challenge.msorders.controllers;
 
+import br.com.compassuol.sp.challenge.msorders.entity.DetailedOrderDto;
 import br.com.compassuol.sp.challenge.msorders.entity.OrderDto;
 import br.com.compassuol.sp.challenge.msorders.entity.OrderEntity;
 import br.com.compassuol.sp.challenge.msorders.service.CepClient;
@@ -22,15 +23,13 @@ public class OrdersController {
 	private  OrderService orderService;
 	@Autowired
 	private  CepClient client;
-	@Autowired
-	private ClientController rabbitClient;
 
 
 	@GetMapping("/{id}")
-	public ResponseEntity<OrderEntity> getProductById(@PathVariable Long id) {
-		OrderEntity product = orderService.getOrderById(id);
-		if (product != null) {
-			return ResponseEntity.ok(product);
+	public ResponseEntity<DetailedOrderDto> getProductById(@PathVariable Long id) {
+		DetailedOrderDto order = orderService.getDetailedOrderById(id);
+		if (order != null) {
+			return ResponseEntity.ok(order);
 		} else {
 			return ResponseEntity.notFound().build();
 		}
@@ -39,13 +38,6 @@ public class OrdersController {
 	@PostMapping
 	public ResponseEntity<OrderEntity> createOrder(@RequestBody OrderDto order) {
 		OrderEntity orderEntity = new OrderEntity();
-		orderEntity.setUserId(order.userId());
-		Integer[] temp = order.products();
-		for (Integer i : temp) {
-			if (!Objects.equals(rabbitClient.checkProduct(i), "invalid product")) {
-				orderEntity.addProduct(rabbitClient.checkProduct(i));
-			}
-		}
 		orderEntity.setEnderecoEntrega(client.search(order.enderecoEntrega()).toString());
 		OrderEntity createdProduct = orderService.createOrder(orderEntity);
 		return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
